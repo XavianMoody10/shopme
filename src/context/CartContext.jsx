@@ -20,9 +20,9 @@ export const CartContext = ({ children }) => {
     }
   }
 
-  function increaseQuantity() {
+  function increaseQuantity({ itemID }) {
     const cartDeepCopy = JSON.parse(JSON.stringify(cart));
-    const foundItem = cartDeepCopy.find((item) => item.id === itemId);
+    const foundItem = cartDeepCopy.find((item) => item.id === itemID);
     foundItem.quantity = foundItem.quantity + 1;
   }
 
