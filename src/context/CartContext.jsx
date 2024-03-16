@@ -11,22 +11,44 @@ export const CartContext = ({ children }) => {
     setCart((prev) => [...prev, model]);
   }
 
-  function deleteFromCart(itemId) {
-    const doesItemExist = [...cart].find((item) => item.id === itemId);
+  function deleteFromCart(itemID) {
+    const doesItemExist = [...cart].find((item) => item.id === itemID);
 
     if (doesItemExist) {
-      const updatedCart = [...cart].filter((item) => item.id !== itemId);
+      const updatedCart = [...cart].filter((item) => item.id !== itemID);
       setCart(updatedCart);
     }
   }
 
-  function increaseQuantity({ itemID }) {
-    const cartDeepCopy = JSON.parse(JSON.stringify(cart));
-    const foundItem = cartDeepCopy.find((item) => item.id === itemID);
-    foundItem.quantity = foundItem.quantity + 1;
+  function increaseQuantity(itemID) {
+    const updatedCart = [...cart].map((item) => {
+      if (item.id === itemID) {
+        return { ...item, quantity: item.quantity + 1 };
+      } else {
+        return item;
+      }
+    });
+
+    setCart(updatedCart);
   }
 
-  function decreaseQuantity() {}
+  function decreaseQuantity(itemID) {
+    const findItem = [...cart].find((item) => item.id === itemID);
+
+    if (findItem.quantity > 1) {
+      const updatedCart = [...cart].map((item) => {
+        if (item.id === itemID) {
+          return { ...item, quantity: item.quantity - 1 };
+        } else {
+          return item;
+        }
+      });
+
+      setCart(updatedCart);
+    } else {
+      return;
+    }
+  }
 
   return (
     <Context.Provider
@@ -34,6 +56,8 @@ export const CartContext = ({ children }) => {
         cart: cart,
         addToCartHandler: addToCart,
         deleteFromCartHandler: deleteFromCart,
+        increaseQuantityHandler: increaseQuantity,
+        decreaseQuantityHandler: decreaseQuantity,
       }}
     >
       {children}
