@@ -1,9 +1,13 @@
 import React, { useContext } from "react";
 import { Context } from "../../context/CartContext";
+import numbro from "numbro";
 
 export const CartItem = ({ item }) => {
   const { increaseQuantityHandler, decreaseQuantityHandler } =
     useContext(Context);
+  const totalPrice = numbro(item.price * item.quantity).formatCurrency({
+    mantissa: 2,
+  });
 
   return (
     <div key={item.id} className=" border w-full flex gap-4 p-2">
@@ -16,7 +20,7 @@ export const CartItem = ({ item }) => {
       <div className=" flex flex-col gap-5 justify-between w-full">
         <div className=" space-y-2">
           <p className=" font-kite-one text-sm">{item.title}</p>
-          <p className=" font-knewave text-sm">{item.price}</p>
+          <p className=" font-knewave text-sm">{totalPrice}</p>
         </div>
 
         <div>

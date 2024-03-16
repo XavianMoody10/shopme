@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { Context } from "../../context/CartContext";
 import { AddToCartButton } from "../buttons/AddToCartButton";
 import { RemoveButton } from "../buttons/RemoveButton";
+import numbro from "numbro";
 
 export const ShopItem = ({ item }) => {
   const { cart } = useContext(Context);
@@ -11,7 +12,9 @@ export const ShopItem = ({ item }) => {
     <div className=" flex flex-col gap-4 max-w-[320px]">
       <img src={item.image} alt="product image" className=" w-[70%] mx-auto" />
       <p className=" font-kite-one">{item.title}</p>
-      <p className=" font-knewave">{item.price}</p>
+      <p className=" font-knewave">
+        {numbro(item.price).formatCurrency({ mantissa: 2 })}
+      </p>
 
       {!findItemInCart ? (
         <AddToCartButton item={item} />

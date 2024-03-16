@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import ClearOutlinedIcon from "@mui/icons-material/ClearOutlined";
 import { CartItem } from "../items/CartItem";
 import { Context } from "../../context/CartContext";
+import numbro from "numbro";
 
 export const CartDisplay = ({ toggleCartValue, toggleCartHandler }) => {
   const { cart } = useContext(Context);
@@ -10,6 +11,11 @@ export const CartDisplay = ({ toggleCartValue, toggleCartHandler }) => {
   const cartProductsMap = [...cart].map((item) => {
     return <CartItem key={item.id} item={item} />;
   });
+
+  const fullPrice = [...cart].reduce(
+    (acc, cur) => acc + cur.price * cur.quantity,
+    0
+  );
 
   return (
     <motion.div
@@ -29,7 +35,9 @@ export const CartDisplay = ({ toggleCartValue, toggleCartHandler }) => {
       <div className=" space-y-3">
         <p>
           <span className=" font-kite-one">Full Price:</span>{" "}
-          <span className=" font-knewave">${0}</span>
+          <span className=" font-knewave">
+            {numbro(fullPrice).formatCurrency({ mantissa: 2 })}
+          </span>
         </p>
         <input
           type="text"
