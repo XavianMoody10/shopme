@@ -1,11 +1,22 @@
-import React from "react";
+import React, { useState } from "react";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import { ShopItem } from "../items/ShopItem";
 
 export const ShopDisplay = ({ data }) => {
+  const [search, setSearch] = useState("");
+
   // Display items
   const productsDisplayMap = [...data].map((item) => {
     return <ShopItem key={item.id} item={item} />;
+  });
+
+  // Filter Items
+  const productsFilterMap = [...data].map((item) => {
+    if (item.title.toLowerCase().includes(search.toLowerCase())) {
+      return <ShopItem key={item.id} item={item} />;
+    } else {
+      return;
+    }
   });
 
   return (
@@ -16,11 +27,12 @@ export const ShopDisplay = ({ data }) => {
           type="text"
           placeholder=" Search Product"
           className=" w-full outline-none"
+          onChange={(e) => setSearch(e.target.value)}
         />
       </div>
 
       <div className=" mt-10 flex flex-wrap items-end justify-center gap-y-20 gap-x-10">
-        {productsDisplayMap}
+        {productsFilterMap.length ? productsFilterMap : productsDisplayMap}
       </div>
     </div>
   );

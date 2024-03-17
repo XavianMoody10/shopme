@@ -4,6 +4,7 @@ import ClearOutlinedIcon from "@mui/icons-material/ClearOutlined";
 import { CartItem } from "../items/CartItem";
 import { Context } from "../../context/CartContext";
 import numbro from "numbro";
+import { Link } from "react-router-dom";
 
 export const CartDisplay = ({ toggleCartValue, toggleCartHandler }) => {
   const { cart } = useContext(Context);
@@ -46,9 +47,12 @@ export const CartDisplay = ({ toggleCartValue, toggleCartHandler }) => {
         />
       </div>
 
-      <button className=" bg-black text-white py-2 font-kite-one">
+      <Link
+        to={"checkout"}
+        className=" text-center bg-black text-white py-2 font-kite-one"
+      >
         Pay With Stripe
-      </button>
+      </Link>
     </motion.div>
   );
 };

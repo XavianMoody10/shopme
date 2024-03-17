@@ -26,14 +26,14 @@ export const CartItem = ({ item }) => {
         <div>
           <div className=" flex items-center gap-3 w-full">
             <button
-              className=" w-full border"
+              className=" w-full border hover:bg-black hover:text-white"
               onClick={() => decreaseQuantityHandler(item.id)}
             >
               -
             </button>
             <p>{item.quantity}</p>
             <button
-              className=" w-full border"
+              className=" w-full border hover:bg-black hover:text-white"
               onClick={() => increaseQuantityHandler(item.id)}
             >
               +

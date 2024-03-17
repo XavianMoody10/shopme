@@ -8,6 +8,12 @@ import { Shop } from "./pages/Shop";
 import { Checkout } from "./pages/Checkout";
 import { Error } from "./pages/Error";
 import { CartContext } from "./context/CartContext";
+import { Elements } from "@stripe/react-stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
+
+const stripePromise = loadStripe(
+  import.meta.env.VITE_APP_STRIPE_PUBLISHABLE_KEY
+);
 
 function App() {
   const router = createBrowserRouter(
@@ -22,7 +28,9 @@ function App() {
 
   return (
     <CartContext>
-      <RouterProvider router={router} />
+      <Elements stripe={stripePromise}>
+        <RouterProvider router={router} />
+      </Elements>
     </CartContext>
   );
 }
