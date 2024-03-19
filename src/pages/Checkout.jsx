@@ -2,7 +2,6 @@ import React, { useContext } from "react";
 import {
   AddressElement,
   CardElement,
-  PaymentElement,
   useElements,
   useStripe,
 } from "@stripe/react-stripe-js";
@@ -28,10 +27,13 @@ export const Checkout = () => {
 
     const results = await stripe.confirmPayment({
       elements,
+      confirmParams: {
+        return_url: "https://localhost:5173/",
+      },
     });
 
     if (results.error) {
-      console.log("Not Working");
+      console.log(results.error.message);
     } else {
     }
   };
@@ -65,7 +67,7 @@ export const Checkout = () => {
               <h2 className=" font-kite-one text-lg">Shipping Info: </h2>
               <AddressElement options={{ mode: "shipping" }} />
               <button
-                disabled={!stripe || !cart.length}
+                disabled={!stripe}
                 className=" bg-green-600 text-white font-kite-one text-xl py-2 mt-5"
               >
                 Checkout
